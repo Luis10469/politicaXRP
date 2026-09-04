@@ -1,0 +1,645 @@
+<title>Privacidad de XRP</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #FAF9F7;
+    --surface: #FFFFFF;
+    --surface-sunken: #F1F0EE;
+    --border: #E3E1DC;
+    --text: #17181C;
+    --text-muted: #5B5D63;
+    --text-faint: #8B8D93;
+    --accent: #1257C7;
+    --accent-soft: #E9F0FE;
+    --good-bg: #EAF6EE;
+    --good-border: #BFE3CB;
+    --good-text: #1C6B37;
+    --warn-bg: #FBF3E4;
+    --warn-border: #E9D4A4;
+    --warn-text: #6B4E12;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --surface-sunken: #1B1B1B;
+      --border: #2A2A2A;
+      --text: #F2F2F2;
+      --text-muted: #A3A3A3;
+      --text-faint: #737373;
+      --accent: #4E9EFF;
+      --accent-soft: #14243B;
+      --good-bg: #102818;
+      --good-border: #1F4A2C;
+      --good-text: #7FD69A;
+      --warn-bg: #2A2210;
+      --warn-border: #4A3B14;
+      --warn-text: #E4C978;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0A0A0A;
+    --surface: #141414;
+    --surface-sunken: #1B1B1B;
+    --border: #2A2A2A;
+    --text: #F2F2F2;
+    --text-muted: #A3A3A3;
+    --text-faint: #737373;
+    --accent: #4E9EFF;
+    --accent-soft: #14243B;
+    --good-bg: #102818;
+    --good-border: #1F4A2C;
+    --good-text: #7FD69A;
+    --warn-bg: #2A2210;
+    --warn-border: #4A3B14;
+    --warn-text: #E4C978;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+
+  ::selection { background: var(--accent-soft); }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--accent);
+    z-index: 50;
+    transition: width 80ms linear;
+  }
+
+  header.top {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .top-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+  }
+
+  .wordmark .dot { color: var(--accent); }
+
+  .top-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .nav-links a.current {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .nav-links a:not(.current) {
+    color: var(--text-muted);
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(34px, 6vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  .dek {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 58ch;
+    margin: 0 0 34px;
+  }
+
+  .notice {
+    display: flex;
+    gap: 12px;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-text);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .notice.good {
+    background: var(--good-bg);
+    border-color: var(--good-border);
+    color: var(--good-text);
+  }
+
+  .notice svg { flex-shrink: 0; margin-top: 2px; }
+  .notice strong { color: inherit; }
+
+  nav.toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 52px;
+  }
+
+  nav.toc h2 {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 14px;
+    font-weight: 500;
+  }
+
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 28px;
+  }
+
+  nav.toc li { break-inside: avoid; margin-bottom: 9px; }
+
+  nav.toc a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+  }
+
+  nav.toc a:hover { color: var(--accent); }
+
+  nav.toc .n {
+    font-family: var(--mono);
+    color: var(--text-faint);
+    font-size: 12.5px;
+    min-width: 16px;
+  }
+
+  article section {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 70px;
+  }
+
+  article section:first-of-type { border-top: none; padding-top: 0; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+    color: var(--text-faint);
+    min-width: 28px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  p { line-height: 1.65; margin: 0 0 18px; }
+  p:last-of-type { margin-bottom: 0; }
+
+  ul {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+    padding-left: 24px;
+    position: relative;
+  }
+
+  li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .term {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 18px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead {
+    background: var(--surface-sunken);
+  }
+
+  th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .card {
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 28px 0;
+  }
+
+  .card h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  footer {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    font-size: 13px;
+    color: var(--text-faint);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  footer p {
+    margin: 0 0 12px;
+  }
+
+  .back-top {
+    display: inline-block;
+    margin-top: 12px;
+  }
+
+  .cross-ref {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 14px 16px;
+    border-radius: 6px;
+    margin: 18px 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .cross-ref strong {
+    color: var(--accent);
+  }
+</style>
+
+<div class="progress" id="progress"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <div class="wordmark">XRP<span class="dot">.</span></div>
+      <div class="top-meta">Política de Privacidad</div>
+    </div>
+    <nav class="nav-links">
+      <a href="politica-de-privacidad.html" class="current">Privacidad</a>
+      <a href="terminos-y-condiciones.html">Términos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="eyebrow">Legal</div>
+  <h1>Privacidad de XRP</h1>
+  <p class="dek">Qué datos guardamos, para qué, con quién, por cuánto tiempo y qué derechos tienes sobre ellos.</p>
+
+  <div class="notice">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+    <div>
+      Esta es una política real, escrita para explicar cómo funciona XRP hoy. Si tienes dudas sobre
+      privacidad o derechos de datos en tu país, esta será la primera referencia;
+      — en particular las secciones de GDPR, CCPA y Ley 1581 de Colombia, y el hecho de
+      que hoy el borrado de cuenta se tramita por soporte, no con un botón automático.
+    </div>
+  </div>
+
+  <div class="notice good">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+    <div>
+      XRP no tiene publicidad, no usa rastreo de terceros ni analítica externa, y no
+      vende ni comparte tus datos con nadie para fines comerciales. Esta política existe
+      para que sepas exactamente qué guardamos y por qué — no para justificar recolectar
+      más de lo necesario.
+    </div>
+  </div>
+
+  <div class="cross-ref">
+    <strong>📋 Nota:</strong> Asegúrate también de revisar nuestros <a href="terminos-y-condiciones.html">Términos y Condiciones</a>, 
+    que rigen el uso de la app y tus derechos sobre el contenido que publicas.
+  </div>
+
+  <nav class="toc" aria-label="Tabla de contenido">
+    <h2>En este documento</h2>
+    <ol>
+      <li><a href="#recopila"><span class="n">01</span> Qué datos recopilamos</a></li>
+      <li><a href="#proteccion"><span class="n">02</span> Cómo los protegemos</a></li>
+      <li><a href="#retencion"><span class="n">03</span> Cuánto los conservamos</a></li>
+      <li><a href="#terceros"><span class="n">04</span> Con quién los compartimos</a></li>
+      <li><a href="#derechos"><span class="n">05</span> Tus derechos</a></li>
+      <li><a href="#borrado"><span class="n">06</span> Al eliminar tu cuenta</a></li>
+      <li><a href="#menores"><span class="n">07</span> Menores de edad</a></li>
+      <li><a href="#gdpr"><span class="n">08</span> Unión Europea (GDPR)</a></li>
+      <li><a href="#ccpa"><span class="n">09</span> California (CCPA)</a></li>
+      <li><a href="#colombia"><span class="n">10</span> Colombia (Ley 1581)</a></li>
+      <li><a href="#cambios"><span class="n">11</span> Cambios a esta política</a></li>
+      <li><a href="#contacto"><span class="n">12</span> Contacto</a></li>
+    </ol>
+  </nav>
+
+  <article>
+
+    <section id="recopila">
+      <div class="section-head"><span class="section-num">01</span><h2>Qué datos recopilamos</h2></div>
+      <p>Sólo lo necesario para que la app funcione. Nada de esto se pide por separado con un formulario: se genera con el uso normal de XRP.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Dato</th><th>Para qué</th></tr></thead>
+          <tbody>
+            <tr><td class="tag">username + contraseña</td><td>Crear e iniciar sesión en tu cuenta. La contraseña se guarda como hash (bcrypt), nunca en texto plano.</td></tr>
+            <tr><td class="tag">frase de recuperación</td><td>Recuperar tu cuenta si olvidas la contraseña. Se muestra una única vez al crear la cuenta.</td></tr>
+            <tr><td class="tag">foto de perfil</td><td>Se sube a Cloudinary y se entrega por una URL firmada de corta duración — nunca queda pública.</td></tr>
+            <tr><td class="tag">mensajes, posts, historias, respuestas</td><td>El contenido que envías o publicas, para mostrártelo a ti y a quien corresponda según su privacidad.</td></tr>
+            <tr><td class="tag">contactos</td><td>La lista de personas que agregaste, para tu libreta y tus preferencias de privacidad.</td></tr>
+            <tr><td class="tag">dirección IP</td><td>Se usa de forma transitoria para limitar intentos de abuso (fuerza bruta, spam); no se guarda como parte de tu perfil.</td></tr>
+            <tr><td class="tag">datos de suscripción</td><td>Si compras la verificación de pago, guardamos el identificador de cliente y de suscripción de Paddle — nunca el número de tu tarjeta, que Paddle procesa directamente.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="proteccion">
+      <div class="section-head"><span class="section-num">02</span><h2>Cómo los protegemos</h2></div>
+      <ul>
+        <li>Contraseñas con hash bcrypt; nunca se guardan ni se transmiten en texto plano.</li>
+        <li>Sesión mediante JWT firmado; cerrar sesión en todos los dispositivos invalida los tokens existentes.</li>
+        <li>Tráfico cifrado (HTTPS/TLS) entre la app y el servidor.</li>
+        <li>Cabeceras de seguridad (Helmet) y límite de peticiones para frenar fuerza bruta y abuso automatizado.</li>
+        <li>La foto de perfil nunca se sirve como URL pública fija: cada entrega se autoriza y firma en el momento.</li>
+        <li>La base de datos vive en infraestructura gestionada en la nube, con cifrado en reposo a cargo del proveedor.</li>
+      </ul>
+    </section>
+
+    <section id="retencion">
+      <div class="section-head"><span class="section-num">03</span><h2>Cuánto los conservamos</h2></div>
+      <p>XRP está construida sobre la idea de que no todo tiene que quedarse para siempre. La retención no es una promesa aparte: es lo que el sistema borra automáticamente.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Contenido</th><th>Se borra</th></tr></thead>
+          <tbody>
+            <tr><td>Mensajes directos</td><td class="tag">5 min / 1 h / 1 día tras abrirse, según elija quien envía</td></tr>
+            <tr><td>Historias en video</td><td class="tag">24 horas después de publicarse</td></tr>
+            <tr><td>Historias en foto</td><td class="tag">Permanecen hasta que las borres (máximo configurado por cuenta)</td></tr>
+            <tr><td>Posts del muro</td><td class="tag">Según la duración elegida al publicar: permanente, 24 h o 7 días</td></tr>
+            <tr><td>Casos de soporte cerrados</td><td class="tag">Se purgan pasado el plazo de retención interno</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="terceros">
+      <div class="section-head"><span class="section-num">04</span><h2>Con quién los compartimos</h2></div>
+      <p>Sólo con los proveedores que hacen posible el servicio, y sólo con lo mínimo que cada uno necesita:</p>
+      <ul>
+        <li><span class="term">Cloudinary</span> — almacena y entrega fotos de perfil e historias.</li>
+        <li><span class="term">Paddle</span> — procesa el pago de la verificación como Merchant of Record; nunca vemos ni guardamos el número de tu tarjeta.</li>
+        <li><span class="term">El proveedor de base de datos e infraestructura</span> — aloja la base de datos y el servidor de XRP.</li>
+      </ul>
+      <p>No compartimos datos con anunciantes, redes de rastreo ni brokers de datos, porque XRP no trabaja con ninguno.</p>
+    </section>
+
+    <section id="derechos">
+      <div class="section-head"><span class="section-num">05</span><h2>Tus derechos</h2></div>
+      <p>Desde la propia app puedes, en cualquier momento:</p>
+      <ul>
+        <li>Ver y cambiar tu username, tu foto de perfil y tus preferencias de privacidad (quién ve tu foto, tu presencia, quién puede etiquetarte).</li>
+        <li>Borrar tu foto de perfil, tus posts, tus historias y tus respuestas individualmente.</li>
+        <li>Cerrar sesión en todos los dispositivos desde Seguridad de la cuenta.</li>
+      </ul>
+      <p>
+        Para acceder a una copia de tus datos, corregir algo que no puedas cambiar tú
+        mismo, o pedir el borrado completo de tu cuenta, abre un caso desde
+        <span class="term">Ajustes → Soporte</span>. Hoy ese trámite lo gestiona el
+        equipo de soporte a mano; una versión futura lo ofrecerá como botón directo en
+        el perfil.
+      </p>
+    </section>
+
+    <section id="borrado">
+      <div class="section-head"><span class="section-num">06</span><h2>Al eliminar tu cuenta</h2></div>
+      <p>
+        Borrar tu cuenta borra en cascada tu perfil, tus mensajes, tus posts, historias,
+        respuestas, contactos y "me gusta". Es una acción irreversible. Puede conservarse
+        una copia mínima cuando la ley lo exija o cuando el contenido siga bajo revisión
+        de un reporte de moderación abierto al momento del borrado.
+      </p>
+    </section>
+
+    <section id="menores">
+      <div class="section-head"><span class="section-num">07</span><h2>Menores de edad</h2></div>
+      <p>
+        XRP es para personas mayores de 18 años y no está dirigida a menores de 13 bajo
+        ninguna circunstancia. No recopilamos intencionalmente datos de menores de 13
+        años; si detectamos una cuenta de alguien menor de edad, se cierra y se borran
+        sus datos.
+      </p>
+    </section>
+
+    <section id="gdpr">
+      <div class="section-head"><span class="section-num">08</span><h2>Unión Europea (GDPR)</h2></div>
+      <p>
+        Si resides en el Espacio Económico Europeo, procesamos tus datos con base en la
+        ejecución del contrato de uso (poder darte el servicio que pediste) y, para la
+        suscripción de pago, en tu consentimiento explícito al contratarla. Tienes
+        derecho a acceder, rectificar, portar y suprimir tus datos, y a oponerte a su
+        tratamiento — ejércelos por soporte dentro de la app, como se explica arriba.
+      </p>
+    </section>
+
+    <section id="ccpa">
+      <div class="section-head"><span class="section-num">09</span><h2>California (CCPA)</h2></div>
+      <p>
+        XRP no vende ni comparte tus datos personales con fines publicitarios, así que no
+        hay nada que desactivar con un "No vendas mi información": esa práctica
+        simplemente no ocurre. Si resides en California y quieres conocer o borrar los
+        datos que tenemos sobre ti, escríbenos por soporte.
+      </p>
+    </section>
+
+    <section id="colombia">
+      <div class="section-head"><span class="section-num">10</span><h2>Colombia (Ley 1581 de 2012)</h2></div>
+      <p>
+        Como titular de tus datos personales tienes derecho a conocerlos, actualizarlos,
+        rectificarlos y solicitar su supresión (habeas data), y a presentar quejas ante
+        la Superintendencia de Industria y Comercio si consideras que no se respetó este
+        derecho. Puedes ejercerlos escribiendo a soporte dentro de la app.
+      </p>
+    </section>
+
+    <section id="cambios">
+      <div class="section-head"><span class="section-num">11</span><h2>Cambios a esta política</h2></div>
+      <p>
+        Podemos actualizar esta política. Si el cambio es sustancial, lo anunciaremos
+        dentro de la app antes de que entre en vigor.
+      </p>
+    </section>
+
+    <section id="contacto">
+      <div class="section-head"><span class="section-num">12</span><h2>Contacto</h2></div>
+      <p>
+        Para cualquier pregunta sobre esta política o tus datos, abre un caso desde
+        <span class="term">Ajustes → Soporte</span> dentro de la app.
+      </p>
+      <div class="card">
+        <h4>Versión de este borrador</h4>
+        <p>v0.2 — pendiente de revisión legal. No enlazar desde producción hasta su validación.</p>
+      </div>
+      <div class="cross-ref">
+        <strong>Documentos relacionados:</strong> Revisa también nuestros 
+        <a href="terminos-y-condiciones.html">Términos y Condiciones</a> para entender cómo funcionan 
+        tu cuenta, qué puedes y no puedes hacer en la app, y otros términos de uso.
+      </div>
+    </section>
+
+  </article>
+</main>
+
+<footer>
+  <p>Plantilla base de Política de Privacidad para XRP, redactada a partir del
+    funcionamiento real de la app. No constituye asesoría legal.</p>
+  <div style="display: flex; gap: 20px; justify-content: center; font-size: 12px; margin: 16px 0;">
+    <a href="politica-de-privacidad.html">Política de Privacidad</a>
+    <span>•</span>
+    <a href="terminos-y-condiciones.html">Términos y Condiciones</a>
+  </div>
+  <a class="back-top" href="#recopila">↑ Volver al inicio</a>
+</footer>
+
+<script>
+  (function () {
+    var bar = document.getElementById('progress');
+    function update() {
+      var h = document.documentElement;
+      var scrollTop = h.scrollTop || document.body.scrollTop;
+      var height = h.scrollHeight - h.clientHeight;
+      var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
